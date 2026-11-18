@@ -1,4 +1,7 @@
 SCORE_NAMES = ["Love", "Fifteen", "Thirty", "Forty"]
+DEUCE_POINTS = 3
+ENDGAME_POINTS = 4
+WINNING_MARGIN = 2
 
 
 class TennisGame1:
@@ -17,12 +20,15 @@ class TennisGame1:
     def score(self):
         if self.player1_points == self.player2_points:
             return self._tied_score()
-        if self.player1_points >= 4 or self.player2_points >= 4:
+        if (
+            self.player1_points >= ENDGAME_POINTS
+            or self.player2_points >= ENDGAME_POINTS
+        ):
             return self._endgame_score()
         return self._running_score()
 
     def _tied_score(self):
-        if self.player1_points < 3:
+        if self.player1_points < DEUCE_POINTS:
             return SCORE_NAMES[self.player1_points] + "-All"
         return "Deuce"
 
@@ -32,7 +38,7 @@ class TennisGame1:
             return "Advantage player1"
         if point_difference == -1:
             return "Advantage player2"
-        if point_difference >= 2:
+        if point_difference >= WINNING_MARGIN:
             return "Win for player1"
         return "Win for player2"
 
